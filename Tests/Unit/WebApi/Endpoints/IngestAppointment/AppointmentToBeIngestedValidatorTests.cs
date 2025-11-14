@@ -1,7 +1,6 @@
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Time.Testing;
-using WebApi.Endpoints;
 using WebApi.Endpoints.IngestAppointment;
 
 namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;

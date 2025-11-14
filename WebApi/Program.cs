@@ -1,5 +1,4 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using WebApi.Endpoints.IngestAppointment;
 
 var builder = WebApplication.CreateBuilder(args);

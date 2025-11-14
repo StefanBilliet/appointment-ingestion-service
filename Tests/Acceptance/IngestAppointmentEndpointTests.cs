@@ -1,7 +1,6 @@
 using AutoFixture.Xunit3;
 using Flurl.Http;
 using Tests.Infrastructure;
-using WebApi.Endpoints;
 using WebApi.Endpoints.IngestAppointment;
 
 namespace Tests.Acceptance;
