@@ -28,6 +28,7 @@
 
     <ItemGroup>
         <PackageReference Include="AutoFixture.Xunit3" Version="4.19.0" />
+        <PackageReference Include="FakeItEasy" Version="8.3.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0"/>
         <PackageReference Include="Flurl.Http" Version="4.0.2"/>

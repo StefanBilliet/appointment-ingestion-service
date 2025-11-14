@@ -6,10 +6,19 @@ namespace WebApi.Endpoints;
 [Route("api")]
 public class IngestAppointmentEndpoint : ControllerBase
 {
-    [HttpPost("appointments/ingest")]
-    public Task<ActionResult<AppointmentIngestionConfirmation>> IngestAppointment([FromBody] AppointmentToBeIngested appointmentsToBeIngested)
+    private readonly IIngestAppointService _ingestAppointService;
+
+    public IngestAppointmentEndpoint(IIngestAppointService ingestAppointService)
     {
-        throw new NotImplementedException();
+        _ingestAppointService = ingestAppointService;
+    }
+
+    [HttpPost("appointments/ingest")]
+    public async Task<ActionResult<AppointmentIngestionConfirmation>> IngestAppointment([FromBody] AppointmentToBeIngested appointmentsToBeIngested,
+        CancellationToken currentCancellationToken)
+    {
+        var confirmation = await _ingestAppointService.IngestAppointment(appointmentsToBeIngested, currentCancellationToken);
+        return Ok(confirmation);
     }
 }
 
@@ -21,3 +30,8 @@ public record AppointmentIngestionConfirmation(int Id)
 {
     public string Message => "Appointment created successfully.";
 };
+
+public interface IIngestAppointService
+{
+    Task<AppointmentIngestionConfirmation> IngestAppointment(AppointmentToBeIngested appointmentToBeIngested, CancellationToken cancellationToken);
+}
