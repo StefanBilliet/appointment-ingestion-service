@@ -1,4 +1,3 @@
-using AutoFixture.Xunit3;
 using Flurl.Http;
 using Tests.Infrastructure;
 using WebApi.Endpoints.IngestAppointment;
@@ -14,9 +13,11 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
         _client = fixture.Client;
     }
 
-    [Theory(Explicit = true), AutoData]
-    public async Task WHEN_IngestAppointment_THEN_return_confirmation(AppointmentToBeIngested appointmentToBeIngested)
+    [Fact(Explicit = true)]
+    public async Task WHEN_IngestAppointment_THEN_return_confirmation()
     {
+        var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(new DateTimeOffset(2020,1,1,1,0,0, TimeSpan.Zero)), ServiceDuration.From(45));
+        
         var confirmation = await _client
             .Request("/api/appointments/ingest")
             .PostJsonAsync(appointmentToBeIngested, cancellationToken: TestContext.Current.CancellationToken)

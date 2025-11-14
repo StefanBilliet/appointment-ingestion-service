@@ -11,8 +11,8 @@ public class AppointmentToBeIngestedValidator : AbstractValidator<AppointmentToB
             {
                 var now = timeProvider.GetUtcNow();
                 context.MessageFormatter.AppendArgument("CurrentTime", now);
-                return appointmentTime >= now.AddMinutes(5);
+                return appointmentTime.Value >= now.AddMinutes(5);
             })
-            .WithMessage("Appointment time must be at least 5 minutes in the future. (Current time: {CurrentTime})");
+            .WithMessage("Appointment time must be in the future.");
     }
 }

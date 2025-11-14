@@ -22,7 +22,7 @@ public class IngestAppointmentEndpoint : ControllerBase
     }
 }
 
-public record IngestedAppointment(int Id, string ClientName, DateTimeOffset AppointmentTime, ServiceDuration? ServiceDurationInMinutes);
+public record IngestedAppointment(int Id, string ClientName, AppointmentTime AppointmentTime, ServiceDuration? ServiceDurationInMinutes);
 
 public record AppointmentIngestionConfirmation(int Id)
 {

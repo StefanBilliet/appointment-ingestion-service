@@ -19,29 +19,26 @@ public class AppointmentToBeIngestedValidatorTests
     }
 
     [Theory]
-    [InlineData(-1)]
+    [InlineData(-30)]
     [InlineData(0)]
-    [InlineData(3)]
-    [InlineData(4)]
-    public void Appointment_time_not_at_least_5_minutes_in_the_future_fails(int minutesInTheFuture)
+    public void Appointment_time_not_in_the_future_fails(int minutesInTheFuture)
     {
         var appointmentToBeIngested = _fixture.Build<AppointmentToBeIngested>()
-            .With(appointment => appointment.AppointmentTime, _fakeTimeProvider.GetUtcNow().AddMinutes(minutesInTheFuture))
+            .With(appointment => appointment.AppointmentTime, AppointmentTime.From(_fakeTimeProvider.GetUtcNow().AddMinutes(minutesInTheFuture)))
             .Create();
         
         var result = _sut.TestValidate(appointmentToBeIngested);
         
-        result.ShouldHaveValidationErrorFor(appointment => appointment.AppointmentTime).WithErrorMessage($"Appointment time must be at least 5 minutes in the future. (Current time: {_fakeTimeProvider.GetUtcNow()})");
+        result.ShouldHaveValidationErrorFor(appointment => appointment.AppointmentTime).WithErrorMessage("Appointment time must be in the future.");
     }
     
     [Theory]
-    [InlineData(5)]
-    [InlineData(10)]
-    [InlineData(20)]
-    public void Appointment_time_at_least_5_minutes_in_the_future_passes(int minutesInTheFuture)
+    [InlineData(30)]
+    [InlineData(60)]
+    public void Appointment_time_in_the_future_passes(int minutesInTheFuture)
     {
         var appointmentToBeIngested = _fixture.Build<AppointmentToBeIngested>()
-            .With(appointment => appointment.AppointmentTime, _fakeTimeProvider.GetUtcNow().AddMinutes(minutesInTheFuture))
+            .With(appointment => appointment.AppointmentTime, AppointmentTime.From(_fakeTimeProvider.GetUtcNow().AddMinutes(minutesInTheFuture)))
             .Create();
         
         var result = _sut.TestValidate(appointmentToBeIngested);
