@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Endpoints;
+namespace WebApi.Endpoints.IngestAppointment;
 
 [ApiController]
 [Route("api")]
