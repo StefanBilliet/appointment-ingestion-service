@@ -7,6 +7,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/Dotnet.gitignore
 
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.DotSettings.user
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -27,6 +36,9 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+
+# Visual Studio working folder
+.vs/
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -52,3 +64,24 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Coverage / analysis
+*.coverage
+*.coveragexml
+*.codeanalysislog.xml
+*.codeanalysissuppressions
+
+# JetBrains Rider / ReSharper
+.idea/
+*.sln.iml
+*.iws
+*.ipr
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings
+.run/
+/.fleet/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
