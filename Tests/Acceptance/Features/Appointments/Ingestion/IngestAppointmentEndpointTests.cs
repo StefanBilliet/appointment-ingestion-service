@@ -2,6 +2,7 @@ using Flurl.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tests.Infrastructure;
+using WebApi.Features.Appointments.GetById.Contracts;
 using WebApi.Features.Appointments.Ingestion.Contracts;
 using WebApi.Features.Appointments.Ingestion.Domain;
 

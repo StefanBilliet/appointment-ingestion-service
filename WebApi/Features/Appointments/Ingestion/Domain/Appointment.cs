@@ -9,6 +9,7 @@ public class Appointment
 
     private Appointment()
     {
+        ClientName = null!;
         // for EF
     }
 
