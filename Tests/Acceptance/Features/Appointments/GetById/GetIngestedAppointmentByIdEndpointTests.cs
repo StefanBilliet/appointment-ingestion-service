@@ -7,12 +7,12 @@ using WebApi.Features.Shared.Infrastructure;
 
 namespace Tests.Acceptance.Features.Appointments.GetById;
 
-public sealed class GetAppointmentByIdEndpointTests : IClassFixture<AcceptanceTestsFixture>
+public sealed class GetIngestedAppointmentByIdEndpointTests : IClassFixture<AcceptanceTestsFixture>
 {
     private readonly IFlurlClient _client;
     private readonly AppointmentIngestionDbContext _db;
 
-    public GetAppointmentByIdEndpointTests(AcceptanceTestsFixture fixture)
+    public GetIngestedAppointmentByIdEndpointTests(AcceptanceTestsFixture fixture)
     {
         _db = fixture.Factory.Services.GetRequiredService<AppointmentIngestionDbContext>();
         _client = fixture.Client;

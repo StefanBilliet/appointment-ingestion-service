@@ -7,15 +7,15 @@ using WebApi.Features.Appointments.GetById.Presentation;
 
 namespace Tests.Unit.WebApi.Features.Appointments.GetById.Presentation;
 
-public class GetAppointmentByIdEndpointTests
+public class GetIngestedAppointmentByIdEndpointTests
 {
-    private readonly GetAppointmentByIdEndpoint _sut;
+    private readonly GetIngestedAppointmentByIdEndpoint _sut;
     private readonly IGetIngestedAppointmentByIdDataService _getIngestedAppointmentByIdDataService;
 
-    public GetAppointmentByIdEndpointTests()
+    public GetIngestedAppointmentByIdEndpointTests()
     {
         _getIngestedAppointmentByIdDataService = A.Fake<IGetIngestedAppointmentByIdDataService>();
-        _sut = new GetAppointmentByIdEndpoint(_getIngestedAppointmentByIdDataService);
+        _sut = new GetIngestedAppointmentByIdEndpoint(_getIngestedAppointmentByIdDataService);
     }
 
     [Fact]

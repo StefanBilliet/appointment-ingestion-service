@@ -6,11 +6,11 @@ namespace WebApi.Features.Appointments.GetById.Presentation;
 
 [ApiController]
 [Route("api")]
-public class GetAppointmentByIdEndpoint : ControllerBase
+public class GetIngestedAppointmentByIdEndpoint : ControllerBase
 {
     private readonly IGetIngestedAppointmentByIdDataService _getIngestedAppointmentByIdDataService;
 
-    public GetAppointmentByIdEndpoint(IGetIngestedAppointmentByIdDataService getIngestedAppointmentByIdDataService)
+    public GetIngestedAppointmentByIdEndpoint(IGetIngestedAppointmentByIdDataService getIngestedAppointmentByIdDataService)
     {
         _getIngestedAppointmentByIdDataService = getIngestedAppointmentByIdDataService;
     }
