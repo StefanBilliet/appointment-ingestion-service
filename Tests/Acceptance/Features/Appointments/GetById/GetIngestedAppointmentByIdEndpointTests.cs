@@ -18,7 +18,7 @@ public sealed class GetIngestedAppointmentByIdEndpointTests : IClassFixture<Acce
         _client = fixture.Client;
     }
 
-    [Fact(Explicit = true)]
+    [Fact]
     public async Task GIVEN_existing_appointment_WHEN_request_by_id_THEN_returns_appointment()
     {
         var now = DateTimeOffset.UtcNow;
