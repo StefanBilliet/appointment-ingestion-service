@@ -1,4 +1,6 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using WebApi.Endpoints.IngestAppointment;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddValidatorsFromAssemblyContaining<AppointmentToBeIngestedValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddDbContext<AppointmentIngestionDbContext>(options =>
+    options.UseInMemoryDatabase("AppointmentIngestion"));
+builder.Services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<AppointmentIngestionDbContext>());
+builder.Services.AddScoped<IIngestAppointmentService, IngestAppointmentService>();
 
 
 var app = builder.Build();

@@ -3,11 +3,14 @@ namespace WebApi.Endpoints.IngestAppointment;
 public class Appointment
 {
     public int Id { get; private set; }
-    public string ClientName { get; }
-    public AppointmentTime AppointmentTime { get; }
-    public ServiceDuration? ServiceDuration { get; }
+    public string ClientName { get; private set; }
+    public AppointmentTime AppointmentTime { get; private set; }
+    public ServiceDuration? ServiceDuration { get; private set; }
 
-    private Appointment() { } // for EF
+    private Appointment()
+    {
+        // for EF
+    }
 
     private Appointment(string clientName, AppointmentTime appointmentTime, ServiceDuration? serviceDuration)
     {
