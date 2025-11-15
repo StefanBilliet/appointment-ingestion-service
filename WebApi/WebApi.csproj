@@ -11,12 +11,20 @@
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.11" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
         <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" Version="1.5.0" />
         <PackageReference Include="Vogen" Version="8.0.2" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Features\Shared\" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="OpenApi\appointments.openapi.yaml">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>openapi\appointments.openapi.yaml</TargetPath>
+        </Content>
     </ItemGroup>
 
 </Project>

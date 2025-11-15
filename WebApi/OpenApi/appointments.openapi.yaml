@@ -1,0 +1,167 @@
+openapi: 3.1.0
+info:
+  title: Appointment Ingestion API
+  version: '1.0'
+  description: |
+    Endpoints for ingesting appointments coming from legacy systems and retrieving ingested appointments.
+servers:
+  - url: http://localhost
+paths:
+  /api/appointments/ingest:
+    post:
+      summary: Ingest an appointment
+      description: Validates and persists a single appointment coming from a legacy source.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentToBeIngested'
+            examples:
+              sample:
+                summary: Basic appointment
+                value:
+                  clientName: Alice Johnson
+                  appointmentTime: '2025-06-15T10:30:00Z'
+                  serviceDurationInMinutes: 45
+      responses:
+        '200':
+          description: Appointment ingested successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentIngestionConfirmation'
+        '400':
+          description: Validation failure.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '500':
+          description: Unhandled error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/appointments/{id}:
+    get:
+      summary: Get an ingested appointment
+      description: Retrieves a previously ingested appointment by identifier.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: Identifier returned by the ingestion endpoint.
+      responses:
+        '200':
+          description: Appointment found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestedAppointment'
+        '404':
+          description: Appointment not found.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '500':
+          description: Unhandled error.
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    AppointmentToBeIngested:
+      type: object
+      required:
+        - clientName
+        - appointmentTime
+      properties:
+        clientName:
+          type: string
+          description: Person receiving the service.
+          example: Alice Johnson
+        appointmentTime:
+          type: string
+          format: date-time
+          description: ISO-8601 timestamp that must fall on the hour or half-hour and at least five minutes in the future.
+          example: '2025-06-15T10:30:00Z'
+        serviceDurationInMinutes:
+          type: integer
+          format: int32
+          minimum: 1
+          default: 30
+          description: Duration of the appointment in minutes. Defaults to 30 when omitted.
+    AppointmentIngestionConfirmation:
+      type: object
+      required:
+        - id
+        - message
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Identifier assigned to the ingested appointment.
+        message:
+          type: string
+          description: Human readable confirmation message.
+    IngestedAppointment:
+      type: object
+      required:
+        - id
+        - clientName
+        - appointmentTime
+      properties:
+        id:
+          type: integer
+          format: int32
+        clientName:
+          type: string
+        appointmentTime:
+          type: string
+          format: date-time
+        serviceDurationInMinutes:
+          type: integer
+          format: int32
+          nullable: true
+    ProblemDetails:
+      type: object
+      required:
+        - title
+        - status
+      properties:
+        type:
+          type: string
+          format: uri
+          nullable: true
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          format: uri
+          nullable: true
+    ValidationProblemDetails:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          required:
+            - errors
+          properties:
+            errors:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
