@@ -6,9 +6,9 @@ namespace WebApi.Endpoints.IngestAppointment;
 [Route("api")]
 public class IngestAppointmentEndpoint : ControllerBase
 {
-    private readonly IIngestAppointService _ingestAppointService;
+    private readonly IIngestAppointmentService _ingestAppointService;
 
-    public IngestAppointmentEndpoint(IIngestAppointService ingestAppointService)
+    public IngestAppointmentEndpoint(IIngestAppointmentService ingestAppointService)
     {
         _ingestAppointService = ingestAppointService;
     }
@@ -28,8 +28,3 @@ public record AppointmentIngestionConfirmation(int Id)
 {
     public string Message => "Appointment created successfully.";
 };
-
-public interface IIngestAppointService
-{
-    Task<AppointmentIngestionConfirmation> IngestAppointment(AppointmentToBeIngested appointmentToBeIngested, CancellationToken cancellationToken);
-}

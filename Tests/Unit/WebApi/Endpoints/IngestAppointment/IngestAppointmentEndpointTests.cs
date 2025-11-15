@@ -8,11 +8,11 @@ namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
 public class IngestAppointmentEndpointTests
 {
     private readonly IngestAppointmentEndpoint _sut;
-    private readonly IIngestAppointService _ingestAppointService;
+    private readonly IIngestAppointmentService _ingestAppointService;
 
     public IngestAppointmentEndpointTests()
     {
-        _ingestAppointService = A.Fake<IIngestAppointService>();
+        _ingestAppointService = A.Fake<IIngestAppointmentService>();
         _sut = new IngestAppointmentEndpoint(_ingestAppointService);
     }
 
