@@ -1,6 +1,7 @@
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
+namespace Tests.Unit.WebApi.Features.Appointments.Ingestion.Contracts;
 
 public class AppointmentToBeIngestedTests
 {

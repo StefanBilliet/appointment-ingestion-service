@@ -1,6 +1,7 @@
 using FluentValidation;
+using WebApi.Features.Appointments.Ingestion.Contracts;
 
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Appointments.Ingestion.Application;
 
 public class AppointmentToBeIngestedValidator : AbstractValidator<AppointmentToBeIngested>
 {

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Shared.Infrastructure;
 
 public class AppointmentIngestionDbContext : DbContext, IUnitOfWork
 {

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Shared.Infrastructure;
 
 public interface IUnitOfWork
 {

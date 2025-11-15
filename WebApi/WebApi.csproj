@@ -15,4 +15,9 @@
         <PackageReference Include="Vogen" Version="8.0.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Appointments\GetById\Presentation\" />
+      <Folder Include="Features\Shared\" />
+    </ItemGroup>
+
 </Project>

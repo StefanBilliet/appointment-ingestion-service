@@ -1,4 +1,6 @@
-namespace WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Domain;
+
+namespace WebApi.Features.Appointments.Ingestion.Contracts;
 
 public record AppointmentToBeIngested
 {

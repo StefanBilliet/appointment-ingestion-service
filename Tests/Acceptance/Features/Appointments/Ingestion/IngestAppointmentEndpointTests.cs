@@ -1,11 +1,11 @@
-using System.Text.Json;
 using Flurl.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tests.Infrastructure;
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace Tests.Acceptance;
+namespace Tests.Acceptance.Features.Appointments.Ingestion;
 
 public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTestsFixture>
 {

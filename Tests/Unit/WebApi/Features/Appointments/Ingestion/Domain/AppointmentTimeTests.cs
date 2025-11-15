@@ -1,7 +1,7 @@
 using Vogen;
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
+namespace Tests.Unit.WebApi.Features.Appointments.Ingestion.Domain;
 
 public class AppointmentTimeTests
 {

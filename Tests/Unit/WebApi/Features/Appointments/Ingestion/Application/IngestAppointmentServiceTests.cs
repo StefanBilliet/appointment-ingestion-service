@@ -1,7 +1,10 @@
 using FakeItEasy;
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Application;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Domain;
+using WebApi.Features.Shared.Infrastructure;
 
-namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
+namespace Tests.Unit.WebApi.Features.Appointments.Ingestion.Application;
 
 public class IngestAppointmentServiceTests
 {

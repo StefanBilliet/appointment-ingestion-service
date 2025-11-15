@@ -1,4 +1,4 @@
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Appointments.Ingestion.Domain;
 
 public class Appointment
 {

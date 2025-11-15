@@ -1,6 +1,6 @@
 using Vogen;
 
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Appointments.Ingestion.Domain;
 
 [ValueObject<int>]
 public partial struct ServiceDuration

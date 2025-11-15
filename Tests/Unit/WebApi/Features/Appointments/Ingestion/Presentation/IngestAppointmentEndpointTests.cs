@@ -1,9 +1,11 @@
 using AutoFixture.Xunit3;
 using FakeItEasy;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Application;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Presentation;
 
-namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
+namespace Tests.Unit.WebApi.Features.Appointments.Ingestion.Presentation;
 
 public class IngestAppointmentEndpointTests
 {

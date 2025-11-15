@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace WebApi.Endpoints.IngestAppointment;
+namespace WebApi.Features.Shared.Infrastructure;
 
 public sealed class AppointmentEntityTypeConfiguration : IEntityTypeConfiguration<Appointment>
 {

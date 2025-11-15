@@ -1,4 +1,8 @@
-namespace WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Domain;
+using WebApi.Features.Shared.Infrastructure;
+
+namespace WebApi.Features.Appointments.Ingestion.Application;
 
 public interface IIngestAppointmentService
 {

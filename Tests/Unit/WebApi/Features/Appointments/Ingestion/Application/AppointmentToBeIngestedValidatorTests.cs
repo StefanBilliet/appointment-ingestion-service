@@ -1,9 +1,11 @@
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Microsoft.Extensions.Time.Testing;
-using WebApi.Endpoints.IngestAppointment;
+using WebApi.Features.Appointments.Ingestion.Application;
+using WebApi.Features.Appointments.Ingestion.Contracts;
+using WebApi.Features.Appointments.Ingestion.Domain;
 
-namespace Tests.Unit.WebApi.Endpoints.IngestAppointment;
+namespace Tests.Unit.WebApi.Features.Appointments.Ingestion.Application;
 
 public class AppointmentToBeIngestedValidatorTests
 {
