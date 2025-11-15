@@ -33,7 +33,7 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
             error => error.Key == nameof(appointmentToBeIngested.AppointmentTime) && error.Value.Contains("Appointment time must be in the future."));
     }
     
-    [Fact(Explicit = true)]
+    [Fact]
     public async Task GIVEN_appointment_in_the_future_WHEN_IngestAppointment_THEN_return_confirmation()
     {
         var tomorrow = DateTimeOffset.Now.AddDays(1);
