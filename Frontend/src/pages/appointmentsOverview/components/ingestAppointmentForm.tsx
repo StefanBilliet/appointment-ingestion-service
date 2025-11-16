@@ -1,24 +1,12 @@
 import {zodResolver} from '@hookform/resolvers/zod';
 import {Button, Card, Form, Stack} from 'react-bootstrap';
 import {useForm} from 'react-hook-form';
-import {z} from 'zod';
 import {useIngestAppointmentMutation} from '../data/appointmentsApi.ts';
-
-const ingestAppointmentSchema = z.object({
-  clientName: z.string().trim().min(1, 'Client name is required'),
-  appointmentTime: z.string().trim().min(1, 'Appointment time is required'),
-  duration: z
-    .string()
-    .transform((value) => value.trim())
-    .refine(
-      (value) => value === '' || !Number.isNaN(Number(value)),
-      'Duration must be a number',
-    )
-    .transform((value) => (value === '' ? undefined : Number(value))),
-});
-
-type IngestAppointmentFormInput = z.input<typeof ingestAppointmentSchema>;
-type IngestAppointmentFormValues = z.output<typeof ingestAppointmentSchema>;
+import {
+  ingestAppointmentSchema,
+  type IngestAppointmentFormInput,
+  type IngestAppointmentFormValues,
+} from '../validators/ingestAppointmentFormSchema.ts';
 
 export const IngestAppointmentForm = () => {
   const [ingestAppointment, {isLoading}] = useIngestAppointmentMutation();
