@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Appointment, CreateAppointmentRequest } from '../api/appointments';
+import type { Appointment, CreateAppointmentRequest } from '../../../api/appointments.ts';
 
 const resolveBaseUrl = () => {
   if (typeof window !== 'undefined' && window.location?.origin) {

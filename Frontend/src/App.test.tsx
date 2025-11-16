@@ -19,5 +19,6 @@ describe('App', () => {
     ).toBeInTheDocument();
 
     expect(screen.getByText(/storybook mock/i)).toBeInTheDocument();
+    expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 });

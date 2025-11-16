@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Card, Container, Form, ListGroup, Stack } from 'react-bootstrap';
+import { http, HttpResponse } from 'msw';
+import { Provider } from 'react-redux';
+import { Button, Card, Container, Form, Stack } from 'react-bootstrap';
+import AppointmentsList from '../components/appointments';
+import { createAppStore } from '../../../state/store';
 
 const MOCK_APPOINTMENTS = [
   {
@@ -65,35 +69,7 @@ const MockAppointmentsOverview = () => (
           </Stack>
         </Card.Body>
       </Card>
-      <Card>
-        <Card.Body>
-          <Stack gap={3}>
-            <Stack direction="horizontal" gap={3}>
-              <Stack gap={1}>
-                <Card.Title as="h2">Recently ingested</Card.Title>
-                <Form.Text muted>Static sample data for design reference.</Form.Text>
-              </Stack>
-              <Form.Text muted>{MOCK_APPOINTMENTS.length} appointments</Form.Text>
-            </Stack>
-          </Stack>
-          <ListGroup variant="flush">
-            {MOCK_APPOINTMENTS.map((appointment) => (
-              <ListGroup.Item key={appointment.id}>
-                <Stack direction="horizontal" gap={3}>
-                  <Stack gap={0}>
-                    <strong>{appointment.clientName}</strong>
-                    <Form.Text muted>
-                      {new Date(appointment.appointmentTime).toLocaleString()} •{' '}
-                      {appointment.duration} minutes
-                    </Form.Text>
-                  </Stack>
-                  <Form.Text muted>ID: {appointment.id}</Form.Text>
-                </Stack>
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
-        </Card.Body>
-      </Card>
+      <AppointmentsList />
     </Stack>
   </Container>
 );
@@ -103,7 +79,19 @@ const meta = {
   component: MockAppointmentsOverview,
   parameters: {
     controls: { hideNoControlsWarning: true },
+    msw: {
+      handlers: [
+        http.get('/api/appointments', () => HttpResponse.json(MOCK_APPOINTMENTS))
+      ],
+    },
   },
+  decorators: [
+    (Story) => (
+      <Provider store={createAppStore()}>
+        <Story />
+      </Provider>
+    ),
+  ],
 } satisfies Meta<typeof MockAppointmentsOverview>;
 
 export default meta;

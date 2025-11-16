@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { appointmentsApi } from './appointmentsApi';
+import { appointmentsApi } from '../pages/appointmentsOverview/data/appointmentsApi.ts';
 
 export const createAppStore = () =>
   configureStore({
