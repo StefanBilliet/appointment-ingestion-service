@@ -1,0 +1,99 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "24.x"
+  DOTNET_VERSION: "9.0.x"
+
+jobs:
+  frontend:
+    name: Frontend · Build, Test & Package
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Frontend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: |
+            Frontend/**/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint -- --max-warnings=0
+
+      - name: Test
+        run: npm run test -- --run
+
+      - name: Build
+        run: npm run build
+
+      - name: Package frontend bundle
+        run: |
+          mkdir -p ../artifacts
+          tar -czf ../artifacts/frontend-dist.tar.gz -C dist .
+
+      - name: Upload frontend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: artifacts/frontend-dist.tar.gz
+          if-no-files-found: error
+
+  backend:
+    name: Backend · Build, Test & Package
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore
+        run: dotnet restore AppointmentIngestionService.sln
+
+      - name: Build
+        run: dotnet build AppointmentIngestionService.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test Tests/Tests.csproj --configuration Release --no-build
+
+      - name: Publish Web API
+        run: dotnet publish WebApi/WebApi.csproj --configuration Release --no-build --output ./artifacts/backend
+
+      - name: Upload backend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-publish
+          path: artifacts/backend
+          if-no-files-found: error

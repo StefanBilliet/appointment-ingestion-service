@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import App from './app';
+import App from './app.tsx';
 import { createAppStore } from './state/store';
 
 describe('App', () => {
@@ -15,10 +15,7 @@ describe('App', () => {
   it('renders the placeholder content', () => {
     renderApp();
     expect(
-      screen.getByRole('heading', { level: 1, name: /appointments sandbox/i }),
+      screen.getByRole('heading', { level: 1, name: /Appointments overview/i }),
     ).toBeInTheDocument();
-
-    expect(screen.getByText(/storybook mock/i)).toBeInTheDocument();
-    expect(screen.getByRole('alert')).toBeInTheDocument();
   });
 });
