@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Features.Shared.Infrastructure;
 
-namespace Tests.Unit.WebApi.Features.Appointments.GetById.Data;
+namespace Tests.Infrastructure;
 
 public sealed class DataTestFixture
 {

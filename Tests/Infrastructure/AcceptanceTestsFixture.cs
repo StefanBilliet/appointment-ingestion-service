@@ -1,5 +1,6 @@
 using Flurl.Http;
 using Microsoft.Extensions.DependencyInjection;
+using WebApi.Features.Shared.Infrastructure;
 
 namespace Tests.Infrastructure;
 
@@ -11,7 +12,8 @@ public sealed class AcceptanceTestsFixture : IAsyncLifetime
 
     public AcceptanceTestsFixture()
     {
-        Factory = new WebApiApplicationFactory();
+        var databaseName = $"AcceptanceTests_{Guid.NewGuid():N}";
+        Factory = new WebApiApplicationFactory(databaseName);
         Client = new FlurlClient(Factory.CreateClient());
     }
 
@@ -23,5 +25,13 @@ public sealed class AcceptanceTestsFixture : IAsyncLifetime
     {
         Client.Dispose();
         await Factory.DisposeAsync();
+    }
+
+    public async Task ResetDatabaseAsync()
+    {
+        await using var scope = Factory.Services.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppointmentIngestionDbContext>();
+        await dbContext.Database.EnsureDeletedAsync();
+        await dbContext.Database.EnsureCreatedAsync();
     }
 }

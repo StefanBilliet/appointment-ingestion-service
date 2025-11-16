@@ -7,27 +7,30 @@ using WebApi.Features.Shared.Infrastructure;
 
 namespace Tests.Acceptance.Features.Appointments.GetById;
 
-public sealed class GetIngestedAppointmentByIdEndpointTests : IClassFixture<AcceptanceTestsFixture>
+public sealed class GetIngestedAppointmentListItemsEndpointTests : IClassFixture<AcceptanceTestsFixture>
 {
+    private readonly AcceptanceTestsFixture _fixture;
     private readonly IFlurlClient _client;
-    private readonly AppointmentIngestionDbContext _db;
 
-    public GetIngestedAppointmentByIdEndpointTests(AcceptanceTestsFixture fixture)
+    public GetIngestedAppointmentListItemsEndpointTests(AcceptanceTestsFixture fixture)
     {
-        _db = fixture.Factory.Services.GetRequiredService<AppointmentIngestionDbContext>();
+        _fixture = fixture;
         _client = fixture.Client;
     }
-
+    
     [Fact]
-    public async Task GIVEN_existing_appointment_WHEN_request_by_id_THEN_returns_appointment()
+    public async Task GIVEN_existing_appointment_WHEN_get_by_id_THEN_returns_appointment()
     {
+        await _fixture.ResetDatabaseAsync();
         var now = DateTimeOffset.UtcNow;
         var appointment = Appointment.Ingest(
             "Alice Johnson",
             AppointmentTime.From(new DateTimeOffset(now.Year, now.Month, now.Day, now.Hour, 0, 0, TimeSpan.Zero).AddHours(2)),
             ServiceDuration.From(45));
-        await _db.Appointments.AddAsync(appointment, TestContext.Current.CancellationToken);
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await using var scope = _fixture.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppointmentIngestionDbContext>();
+        await db.Appointments.AddAsync(appointment, TestContext.Current.CancellationToken);
+        await db.SaveChangesAsync(TestContext.Current.CancellationToken);
 
         var retrieved = await _client
             .Request($"/api/appointments/{appointment.Id}")

@@ -1,4 +1,5 @@
 using Tests.Builders;
+using Tests.Infrastructure;
 using WebApi.Features.Appointments.GetById.Data;
 using WebApi.Features.Shared.Infrastructure;
 

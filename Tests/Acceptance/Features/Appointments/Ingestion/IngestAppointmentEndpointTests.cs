@@ -10,16 +10,19 @@ namespace Tests.Acceptance.Features.Appointments.Ingestion;
 
 public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTestsFixture>
 {
+    private readonly AcceptanceTestsFixture _fixture;
     private readonly IFlurlClient _client;
 
     public IngestAppointmentEndpointTests(AcceptanceTestsFixture fixture)
     {
+        _fixture = fixture;
         _client = fixture.Client;
     }
 
     [Fact]
     public async Task GIVEN_appointment_in_the_past_WHEN_IngestAppointment_THEN_return_bad_request_with_problem_details()
     {
+        await _fixture.ResetDatabaseAsync();
         var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(new DateTimeOffset(2020,1,1,1,0,0, TimeSpan.Zero)), ServiceDuration.From(45));
 
         var confirmation = await _client
@@ -36,6 +39,7 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
     [Fact]
     public async Task GIVEN_appointment_in_the_future_WHEN_IngestAppointment_THEN_return_confirmation()
     {
+        await _fixture.ResetDatabaseAsync();
         var tomorrow = DateTimeOffset.Now.AddDays(1);
         var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(new DateTimeOffset(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0, tomorrow.Offset)), ServiceDuration.From(45));
 

@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
+using WebApi.Features.Appointments.Get.Data;
 using WebApi.Features.Appointments.GetById.Data;
 using WebApi.Features.Appointments.Ingestion.Application;
 using WebApi.Features.Shared.Infrastructure;
@@ -19,6 +20,7 @@ builder.Services.AddDbContext<AppointmentIngestionDbContext>(options => options.
 builder.Services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<AppointmentIngestionDbContext>());
 builder.Services.AddScoped<IIngestAppointmentService, IngestAppointmentService>();
 builder.Services.AddScoped<IGetIngestedAppointmentByIdDataService, GetIngestedAppointmentByIdDataService>();
+builder.Services.AddScoped<IGetIngestedAppointmentListItemsDataService, GetIngestedAppointmentListItemsDataService>();
 
 var openApiFilePath = Path.Combine(AppContext.BaseDirectory, "openapi", "appointments.openapi.yaml");
 
