@@ -1,15 +1,23 @@
+import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import App from './App';
-import {describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
+import App from './app';
+import { createAppStore } from './state/store';
 
 describe('App', () => {
-  it('renders the ingestion form skeleton', async () => {
-    render(<App />);
-    expect(screen.getByRole('heading', { level: 1, name: /appointment ingestion/i })).toBeInTheDocument();
+  const renderApp = () =>
+    render(
+      <Provider store={createAppStore()}>
+        <App />
+      </Provider>,
+    );
 
-    const nameInput = screen.getByLabelText(/client name/i);
-    await userEvent.type(nameInput, 'Jane Doe');
-    expect(nameInput).toHaveValue('Jane Doe');
+  it('renders the placeholder content', () => {
+    renderApp();
+    expect(
+      screen.getByRole('heading', { level: 1, name: /appointments sandbox/i }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(/storybook mock/i)).toBeInTheDocument();
   });
 });
