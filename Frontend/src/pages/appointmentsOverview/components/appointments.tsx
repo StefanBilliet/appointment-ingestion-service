@@ -5,7 +5,7 @@ const AppointmentsList = () => {
   const { data: appointments = [], isFetching, isError } = useGetAppointmentsQuery();
   const title = 'Overview';
   const headingId = `${title.replaceAll(/\s+/g, '-').toLowerCase()}-heading`;
-debugger;
+
   if (isFetching) {
     return (
       <Card as="section" aria-labelledby={headingId}>

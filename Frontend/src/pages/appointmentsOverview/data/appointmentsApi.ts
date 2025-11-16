@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Appointment, CreateAppointmentRequest } from '../../../api/appointments.ts';
+import type {IngestedAppointmentListItem} from "../../../api/ingestedAppointmentListItem.ts";
+import type {AppointmentToBeIngested} from "../../../api/appointmentToBeIngested.ts";
+import type {AppointmentIngestionConfirmation} from "../../../api/appointmentIngestionConfirmation.ts";
 
 const resolveBaseUrl = () => {
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin.replace(/\/$/, '');
+  if (globalThis.window?.location?.origin) {
+    return globalThis.window.location.origin.replace(/\/$/, '');
   }
 
   const envBase = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '');
@@ -15,11 +17,11 @@ export const appointmentsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: `${resolveBaseUrl()}/api/appointments` }),
   tagTypes: ['AppointmentList'],
   endpoints: (builder) => ({
-    getAppointments: builder.query<Appointment[], void>({
+    getAppointments: builder.query<IngestedAppointmentListItem[], void>({
       query: () => '',
       providesTags: ['AppointmentList'],
     }),
-    ingestAppointment: builder.mutation<Appointment, CreateAppointmentRequest>({
+    ingestAppointment: builder.mutation<AppointmentIngestionConfirmation, AppointmentToBeIngested>({
       query: (payload) => ({
         url: '/ingest',
         method: 'POST',
