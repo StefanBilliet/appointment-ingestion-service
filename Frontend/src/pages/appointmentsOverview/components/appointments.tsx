@@ -50,8 +50,8 @@ const AppointmentsList = () => {
                   <Stack gap={1}>
                     <strong>{appointment.clientName}</strong>
                     <Form.Text muted>
-                      {new Date(appointment.appointmentTime).toLocaleString()} •{' '}
-                      {appointment.duration} minutes
+                      {new Date(appointment.appointmentTime).toLocaleString()}
+                      {appointment.duration ? ` • ${appointment.duration} minutes` : null}
                     </Form.Text>
                   </Stack>
                 </ListGroup.Item>

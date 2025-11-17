@@ -3,8 +3,8 @@ import {http, HttpResponse} from 'msw';
 import {Provider} from 'react-redux';
 import {describe, expect, test} from 'vitest';
 import AppointmentsList from '../components/appointments';
-import {createAppStore} from '../../../state/store';
-import {setupMswServer} from '../../../test/setupMsw';
+import {createAppStore} from '@/state/store.ts';
+import {setupMswServer} from '@/test/setupMsw.ts';
 
 const server = setupMswServer();
 
@@ -72,5 +72,30 @@ describe('AppointmentsList', () => {
       `${new Date(mockAppointments[0].appointmentTime).toLocaleString()} • ${mockAppointments[0].duration} minutes`);
     expect(items[1]).toHaveTextContent(`${mockAppointments[1].clientName}` +
       `${new Date(mockAppointments[1].appointmentTime).toLocaleString()} • ${mockAppointments[1].duration} minutes`);
+  });
+
+  test('GIVEN appointment without duration WHEN render THEN do not show duration', async () => {
+    const mockAppointments = [
+      {
+        id: 'apt-001',
+        clientName: 'Alice Johnson',
+        appointmentTime: '2025-02-01T10:30:00'
+      }
+    ];
+    server.use(http.get('*/api/appointments', () => HttpResponse.json(mockAppointments)));
+    const store = createAppStore();
+
+    render(
+      <Provider store={store}>
+        <AppointmentsList/>
+      </Provider>,
+    );
+
+    const list = await screen.findByRole('list');
+    const items = within(list).getAllByRole('listitem');
+    expect(items).toHaveLength(1);
+    expect(items[0]).toHaveTextContent(
+      new RegExp(`^${mockAppointments[0].clientName}${new Date(mockAppointments[0].appointmentTime).toLocaleString()}$`)
+    );
   });
 });
