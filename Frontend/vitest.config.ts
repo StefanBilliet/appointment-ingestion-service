@@ -4,6 +4,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import path from "node:path";
 import {playwright} from "@vitest/browser-playwright";
 import {fileURLToPath} from "node:url";
+import './src/test/setupLocalStorage';
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
 export default mergeConfig(viteConfig, defineConfig({
