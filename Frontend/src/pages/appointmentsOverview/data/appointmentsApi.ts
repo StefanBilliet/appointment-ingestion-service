@@ -8,7 +8,10 @@ const resolveBaseUrl = () => {
     return globalThis.window.location.origin.replace(/\/$/, '');
   }
 
-  const envBase = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '');
+  const envBase = (
+    import.meta.env.VITE_API_BASE_URL
+    ?? import.meta.env.API_HTTP
+  )?.replace(/\/$/, '');
   return envBase ?? 'http://localhost';
 };
 
