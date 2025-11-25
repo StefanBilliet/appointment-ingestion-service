@@ -4,7 +4,7 @@ Opinionated sample that ingests appointments through a .NET 10 API backend and a
 
 ## Prerequisites
 - [.NET SDK 10.x](https://dotnet.microsoft.com/download)
-- [Node.js 24.x](https://nodejs.org/)
+- [Node.js 25.x](https://nodejs.org/)
 
 ## Orchestrated (Aspire)
 ```bash
