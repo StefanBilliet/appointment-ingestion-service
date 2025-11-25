@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NODE_VERSION: "24.x"
+  NODE_VERSION: "25.x"
   DOTNET_VERSION: "10.x"
 
 jobs:
@@ -77,6 +77,9 @@ jobs:
   backend:
     name: Backend · Build, Test & Package
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Backend
     env:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
@@ -100,7 +103,7 @@ jobs:
         run: dotnet test Tests/Tests.csproj --configuration Release --no-build
 
       - name: Publish Web API
-        run: dotnet publish WebApi/WebApi.csproj --configuration Release --no-build --output ./artifacts/backend
+        run: dotnet publish WebApi/WebApi.csproj --configuration Release --no-build --output ../artifacts/backend
 
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
