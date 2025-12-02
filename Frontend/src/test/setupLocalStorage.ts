@@ -4,25 +4,21 @@ type StorageHost = typeof globalThis & {
 
 const globalScope = globalThis as StorageHost;
 
-const ensureInScope = (scope: StorageHost | undefined, storage: Storage) => {
+const installLocalStorage = (scope: StorageHost | undefined, storage: Storage) => {
   if (!scope) {
     return;
   }
-  if (scope.localStorage === storage) {
-    return;
+  try {
+    Object.defineProperty(scope, 'localStorage', {
+      configurable: true,
+      value: storage,
+    });
+  } catch {
+    // Ignore if a host already has a non-configurable localStorage (e.g., browser)
   }
-
-  Object.defineProperty(scope, 'localStorage', {
-    configurable: true,
-    value: storage,
-  });
 };
 
 export const ensureMemoryLocalStorage = () => {
-  if (typeof globalScope.localStorage?.getItem === 'function') {
-    return;
-  }
-
   const store = new Map<string, string>();
   const memoryStorage: Storage = {
     get length() {
@@ -41,8 +37,8 @@ export const ensureMemoryLocalStorage = () => {
     },
   };
 
-  ensureInScope(globalScope, memoryStorage);
-  ensureInScope((globalThis as StorageHost & { window?: StorageHost }).window, memoryStorage);
+  installLocalStorage(globalScope, memoryStorage);
+  installLocalStorage((globalThis as StorageHost & { window?: StorageHost }).window, memoryStorage);
 };
 
 ensureMemoryLocalStorage();

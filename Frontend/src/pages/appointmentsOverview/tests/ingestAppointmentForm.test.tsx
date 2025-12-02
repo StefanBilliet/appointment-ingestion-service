@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import {http, HttpResponse} from 'msw';
 import {Provider} from 'react-redux';
 import {afterEach, describe, expect, test, vi} from 'vitest';
-import type {AppointmentToBeIngested} from '../../../api/appointmentToBeIngested.ts';
-import {createAppStore} from '../../../state/store';
-import {setupMswServer} from '../../../test/setupMsw';
+import type {AppointmentToBeIngested} from '@/api/appointmentToBeIngested.ts';
+import {createAppStore} from '@/state/store.ts';
+import {setupMswServer} from '@/test/setupMsw.ts';
 import {IngestAppointmentForm} from '../components/ingestAppointmentForm';
 
 const server = setupMswServer();
@@ -61,7 +61,7 @@ describe('IngestAppointmentForm', () => {
     await waitFor(() =>
       expect(ingestSpy).toHaveBeenCalledWith({
         clientName: 'Alice Johnson',
-        appointmentTime: '2025-02-01T10:30',
+        appointmentTime: '2025-02-01T10:30:00.000Z',
         duration: 45,
       }),
     );
@@ -91,7 +91,7 @@ describe('IngestAppointmentForm', () => {
     await waitFor(() =>
       expect(ingestSpy).toHaveBeenCalledWith({
         clientName: 'Ben Graham',
-        appointmentTime: '2025-02-01T13:30',
+        appointmentTime: '2025-02-01T13:30:00.000Z',
       }),
     );
   });

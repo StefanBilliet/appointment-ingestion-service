@@ -25,7 +25,11 @@ export const IngestAppointmentForm = () => {
   });
 
   const onSubmit = handleSubmit(async (formValues) => {
-    await ingestAppointment(formValues).unwrap();
+    const payload = {
+      ...formValues,
+      appointmentTime: new Date(formValues.appointmentTime).toISOString(),
+    };
+    await ingestAppointment(payload).unwrap();
     reset();
   });
 
