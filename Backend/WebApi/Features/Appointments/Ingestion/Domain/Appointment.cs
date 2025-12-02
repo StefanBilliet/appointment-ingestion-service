@@ -1,3 +1,5 @@
+using SystemClock;
+
 namespace WebApi.Features.Appointments.Ingestion.Domain;
 
 public class Appointment
@@ -21,5 +23,17 @@ public class Appointment
     }
 
     public static Appointment Ingest(string clientName, AppointmentTime appointmentTime, ServiceDuration? duration)
-        => new(clientName, appointmentTime, duration);
+    {
+        GuardIngest(appointmentTime);
+        
+        return new Appointment(clientName, appointmentTime, duration);
+    }
+
+    private static void GuardIngest(AppointmentTime appointmentTime)
+    {
+        if (appointmentTime.Value < Clock.Now.AddMinutes(5))
+        {
+            throw new AppointmentsMustStartAtLeastFiveMinutesInTheFutureException();
+        }
+    }
 }

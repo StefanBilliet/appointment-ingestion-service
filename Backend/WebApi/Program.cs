@@ -1,9 +1,11 @@
-using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 using WebApi.Features.Appointments.Get.Data;
 using WebApi.Features.Appointments.GetById.Data;
 using WebApi.Features.Appointments.Ingestion.Application;
+using WebApi.Features.Appointments.Ingestion.Domain;
+using WebApi.Features.Appointments.Ingestion.Contracts;
 using WebApi.Features.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +16,25 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton(TimeProvider.System);
-builder.Services.AddValidatorsFromAssemblyContaining<AppointmentToBeIngestedValidator>();
-builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddProblemDetails(options =>
+{
+    options.CustomizeProblemDetails = context =>
+    {
+        if (context.Exception is AppointmentsMustStartAtLeastFiveMinutesInTheFutureException domainException)
+        {
+            context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.ProblemDetails = new ValidationProblemDetails(new Dictionary<string, string[]>
+            {
+                [nameof(AppointmentToBeIngested.AppointmentTime)] = ["Appointment time must be in the future."]
+            })
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Appointment not allowed",
+                Detail = domainException.Message
+            };
+        }
+    };
+});
 builder.Services.AddDbContext<AppointmentIngestionDbContext>(options => options.UseInMemoryDatabase("AppointmentIngestion"));
 builder.Services.AddScoped<IUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<AppointmentIngestionDbContext>());
 builder.Services.AddScoped<IIngestAppointmentService, IngestAppointmentService>();
@@ -52,6 +71,30 @@ if (app.Environment.IsDevelopment())
     app.Logger.LogInformation("Swagger UI available at {DocsUrl} and OpenAPI spec at {SpecUrl}", docsUrl, specUrl);
 }
 
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        var status = exception switch
+        {
+            AppointmentsMustStartAtLeastFiveMinutesInTheFutureException => StatusCodes.Status400BadRequest,
+            _ => StatusCodes.Status500InternalServerError
+        };
+
+        context.Response.StatusCode = status;
+        context.Response.ContentType = "application/problem+json";
+
+        var problemDetailsService = context.RequestServices.GetRequiredService<IProblemDetailsService>();
+        await problemDetailsService.WriteAsync(new ProblemDetailsContext
+        {
+            HttpContext = context,
+            Exception = exception,
+            ProblemDetails = { Status = status }
+        });
+    });
+});
 app.UseHttpsRedirection();
 
 app.MapControllers();
