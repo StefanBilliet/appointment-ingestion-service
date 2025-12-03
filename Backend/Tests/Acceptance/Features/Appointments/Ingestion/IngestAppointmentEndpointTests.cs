@@ -23,7 +23,12 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
     public async Task GIVEN_appointment_in_the_past_WHEN_IngestAppointment_THEN_return_bad_request_with_problem_details()
     {
         await _fixture.ResetDatabaseAsync();
-        var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(new DateTimeOffset(2020,1,1,1,0,0, TimeSpan.Zero)), ServiceDuration.From(45));
+        var appointmentToBeIngested = new AppointmentToBeIngested
+        {
+            ClientName = "John Doe",
+            AppointmentTime = AppointmentTime.From(new DateTimeOffset(2020,1,1,1,0,0, TimeSpan.Zero)),
+            ServiceDuration = ServiceDuration.From(45)
+        };
 
         var confirmation = await _client
             .AllowAnyHttpStatus()
@@ -41,7 +46,12 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
     {
         await _fixture.ResetDatabaseAsync();
         var tomorrow = DateTimeOffset.Now.AddDays(1);
-        var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(new DateTimeOffset(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0, tomorrow.Offset)), ServiceDuration.From(45));
+        var appointmentToBeIngested = new AppointmentToBeIngested
+        {
+            ClientName = "John Doe",
+            AppointmentTime = AppointmentTime.From(new DateTimeOffset(tomorrow.Year, tomorrow.Month, tomorrow.Day, 10, 0, 0, tomorrow.Offset)),
+            ServiceDuration = ServiceDuration.From(45)
+        };
 
         var confirmation = await _client
             .Request("/api/appointments/ingest")
@@ -61,6 +71,6 @@ public sealed class IngestAppointmentEndpointTests : IClassFixture<AcceptanceTes
         Assert.Equal(confirmation.Id, ingestedAppointment.Id);
         Assert.Equal(appointmentToBeIngested.ClientName, ingestedAppointment.ClientName);
         Assert.Equal(appointmentToBeIngested.AppointmentTime, ingestedAppointment.AppointmentTime);
-        Assert.Equal(appointmentToBeIngested.ServiceDurationInMinutes, ingestedAppointment.ServiceDurationInMinutes);
+        Assert.Equal(appointmentToBeIngested.ServiceDuration, ingestedAppointment.ServiceDuration);
     }
 }

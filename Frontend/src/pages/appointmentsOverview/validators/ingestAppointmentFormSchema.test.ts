@@ -17,13 +17,13 @@ describe('ingestAppointmentFormSchema', () => {
     const result = ingestAppointmentSchema.parse({
       clientName: 'Valid Person',
       appointmentTime: '2025-02-01T10:30',
-      duration: '',
+      serviceDuration: '',
     });
 
     expect(result).toEqual({
       clientName: 'Valid Person',
       appointmentTime: '2025-02-01T10:30',
-      duration: undefined,
+      serviceDuration: undefined,
     });
   });
 
@@ -33,7 +33,7 @@ describe('ingestAppointmentFormSchema', () => {
     const result = ingestAppointmentSchema.safeParse({
       clientName: 'Too Soon',
       appointmentTime: '2025-02-01T10:03',
-      duration: '',
+      serviceDuration: '',
     });
 
     expect(result.success).toBe(false);
@@ -50,7 +50,7 @@ describe('ingestAppointmentFormSchema', () => {
     const result = ingestAppointmentSchema.safeParse({
       clientName: 'Off Slot',
       appointmentTime: '2025-02-01T10:10',
-      duration: '',
+      serviceDuration: '',
     });
 
     expect(result.success).toBe(false);

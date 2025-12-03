@@ -23,7 +23,7 @@ paths:
                 value:
                   clientName: Alice Johnson
                   appointmentTime: '2025-06-15T10:30:00Z'
-                  serviceDurationInMinutes: 45
+                  serviceDuration: 45
       responses:
         '200':
           description: Appointment ingested successfully.
@@ -65,9 +65,9 @@ paths:
         '404':
           description: Appointment not found.
           content:
-            application/problem+json:
+            text/plain:
               schema:
-                $ref: '#/components/schemas/ProblemDetails'
+                type: string
         '500':
           description: Unhandled error.
           content:
@@ -110,11 +110,12 @@ components:
           format: date-time
           description: ISO-8601 timestamp that must fall on the hour or half-hour and at least five minutes in the future.
           example: '2025-06-15T10:30:00Z'
-        serviceDurationInMinutes:
+        serviceDuration:
           type: integer
           format: int32
           minimum: 1
           default: 30
+          nullable: true
           description: Duration of the appointment in minutes. Defaults to 30 when omitted.
     AppointmentIngestionConfirmation:
       type: object
@@ -144,7 +145,7 @@ components:
         appointmentTime:
           type: string
           format: date-time
-        serviceDurationInMinutes:
+        serviceDuration:
           type: integer
           format: int32
           nullable: true
@@ -163,7 +164,7 @@ components:
         appointmentTime:
           type: string
           format: date-time
-        serviceDurationInMinutes:
+        serviceDuration:
           type: integer
           format: int32
           nullable: true

@@ -20,7 +20,7 @@ export const IngestAppointmentForm = () => {
     defaultValues: {
       clientName: '',
       appointmentTime: '',
-      duration: '',
+      serviceDuration: '',
     },
   });
 
@@ -39,13 +39,10 @@ export const IngestAppointmentForm = () => {
         <Stack gap={3}>
           <Stack gap={1}>
             <Card.Title as="h2">Ingest a new appointment</Card.Title>
-            <Form.Text muted>
-              Static mockup — fields are not connected to any data source.
-            </Form.Text>
           </Stack>
           <Form noValidate onSubmit={onSubmit}>
             <Stack gap={3}>
-              <Form.Group controlId="mockClientName">
+              <Form.Group controlId="clientName">
                 <Form.Label>Client name</Form.Label>
                 <Form.Control
                   placeholder="e.g. Alice Johnson"
@@ -56,7 +53,7 @@ export const IngestAppointmentForm = () => {
                   {errors.clientName?.message}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group controlId="mockAppointmentTime">
+              <Form.Group controlId="appointmentTime">
                 <Form.Label>Appointment time</Form.Label>
                 <Form.Control
                   type="datetime-local"
@@ -67,18 +64,18 @@ export const IngestAppointmentForm = () => {
                   {errors.appointmentTime?.message}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group controlId="mockDuration">
+              <Form.Group controlId="serviceDuration">
                 <Form.Label>Duration (minutes)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="30"
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  {...register('duration')}
-                  isInvalid={Boolean(errors.duration)}
+                  {...register('serviceDuration')}
+                  isInvalid={Boolean(errors.serviceDuration)}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.duration?.message}
+                  {errors.serviceDuration?.message}
                 </Form.Control.Feedback>
               </Form.Group>
               <Stack direction="horizontal" gap={2}>

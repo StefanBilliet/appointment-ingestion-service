@@ -51,7 +51,7 @@ const AppointmentsList = () => {
                     <strong>{appointment.clientName}</strong>
                     <Form.Text muted>
                       {new Date(appointment.appointmentTime).toLocaleString()}
-                      {appointment.duration ? ` • ${appointment.duration} minutes` : null}
+                      {appointment.serviceDuration ? ` • ${appointment.serviceDuration} minutes` : null}
                     </Form.Text>
                   </Stack>
                 </ListGroup.Item>

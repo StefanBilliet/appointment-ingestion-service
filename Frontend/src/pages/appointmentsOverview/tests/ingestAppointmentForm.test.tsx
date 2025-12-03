@@ -62,7 +62,7 @@ describe('IngestAppointmentForm', () => {
       expect(ingestSpy).toHaveBeenCalledWith({
         clientName: 'Alice Johnson',
         appointmentTime: '2025-02-01T10:30:00.000Z',
-        duration: 45,
+        serviceDuration: 45,
       }),
     );
   });

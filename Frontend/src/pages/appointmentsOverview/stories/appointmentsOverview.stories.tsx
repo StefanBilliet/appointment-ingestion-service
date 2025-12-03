@@ -11,19 +11,19 @@ const MOCK_APPOINTMENTS:IngestedAppointmentListItem[] = [
     id: 'apt-001',
     clientName: 'Alice Johnson',
     appointmentTime: '2025-02-01T10:30:00',
-    duration: 45,
+    serviceDuration: 45,
   },
   {
     id: 'apt-002',
     clientName: 'Ben Graham',
     appointmentTime: '2025-02-01T13:15:00',
-    duration: 30,
+    serviceDuration: 30,
   },
   {
     id: 'apt-003',
     clientName: 'Priya Patel',
     appointmentTime: '2025-02-02T09:00:00',
-    duration: 60,
+    serviceDuration: 60,
   },
 ];
 

@@ -25,14 +25,19 @@ public class IngestAppointmentServiceTests
     {
         Appointment? persistedAppointment = null;
         A.CallTo(() => _unitOfWork.AddAsync(A<Appointment>._, A<CancellationToken>._)).Invokes(fakedCall => persistedAppointment = fakedCall.GetArgument<Appointment>(0));
-        var appointmentToBeIngested = new AppointmentToBeIngested("John Doe", AppointmentTime.From(_now.AddMinutes(30)), ServiceDuration.From(45));
+        var appointmentToBeIngested = new AppointmentToBeIngested
+        {
+            ClientName = "John Doe",
+            AppointmentTime = AppointmentTime.From(_now.AddMinutes(30)),
+            ServiceDuration = ServiceDuration.From(45)
+        };
         
         var confirmation = await _sut.IngestAppointment(appointmentToBeIngested, TestContext.Current.CancellationToken);
         
         Assert.NotNull(persistedAppointment);
         Assert.Equal(persistedAppointment.Id, confirmation.Id);
         Assert.Equal(persistedAppointment.AppointmentTime, appointmentToBeIngested.AppointmentTime);
-        Assert.Equal(persistedAppointment.ServiceDuration, appointmentToBeIngested.ServiceDurationInMinutes);
+        Assert.Equal(persistedAppointment.ServiceDuration, appointmentToBeIngested.ServiceDuration);
         Assert.Equal(persistedAppointment.ClientName, appointmentToBeIngested.ClientName);
         A.CallTo(() => _unitOfWork.SaveChangesAsync(A<CancellationToken>._)).MustHaveHappenedOnceExactly();
     }

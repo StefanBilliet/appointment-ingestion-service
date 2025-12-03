@@ -34,7 +34,7 @@ export const ingestAppointmentSchema = z.object({
     .min(1, 'Appointment time is required')
     .refine(isAtLeastFiveMinutesAhead, 'Appointment time must be at least 5 minutes in the future')
     .refine(isOnHourOrHalfHour, 'Appointment time must start on the hour or half-hour'),
-  duration: z
+  serviceDuration: z
     .string()
     .transform((value) => value.trim())
     .refine((value) => value === '' || !Number.isNaN(Number(value)), 'Duration must be a number')

@@ -39,6 +39,6 @@ public sealed class GetIngestedAppointmentListItemsEndpointTests : IClassFixture
         Assert.Equal(appointment.Id, retrieved.Id);
         Assert.Equal(appointment.ClientName, retrieved.ClientName);
         Assert.Equal(appointment.AppointmentTime, retrieved.AppointmentTime);
-        Assert.Equal(appointment.ServiceDuration, retrieved.ServiceDurationInMinutes);
+        Assert.Equal(appointment.ServiceDuration, retrieved.ServiceDuration);
     }
 }

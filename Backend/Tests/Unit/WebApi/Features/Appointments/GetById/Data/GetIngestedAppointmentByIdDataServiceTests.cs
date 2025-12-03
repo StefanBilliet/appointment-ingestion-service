@@ -35,6 +35,6 @@ public class GetIngestedAppointmentByIdDataServiceTests : IClassFixture<DataTest
         Assert.Equal(appointment.Id, ingestedAppointment.Id);
         Assert.Equal(appointment.ClientName, ingestedAppointment.ClientName);
         Assert.Equal(appointment.AppointmentTime, ingestedAppointment.AppointmentTime);
-        Assert.Equal(appointment.ServiceDuration, ingestedAppointment.ServiceDurationInMinutes);
+        Assert.Equal(appointment.ServiceDuration, ingestedAppointment.ServiceDuration);
     }
 }

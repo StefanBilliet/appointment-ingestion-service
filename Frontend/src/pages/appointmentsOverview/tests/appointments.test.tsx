@@ -47,13 +47,13 @@ describe('AppointmentsList', () => {
         id: 'apt-001',
         clientName: 'Alice Johnson',
         appointmentTime: '2025-02-01T10:30:00',
-        duration: 45,
+        serviceDuration: 45,
       },
       {
         id: 'apt-002',
         clientName: 'Ben Graham',
         appointmentTime: '2025-02-01T13:15:00',
-        duration: 30,
+        serviceDuration: 30,
       },
     ];
     server.use(http.get('*/api/appointments', () => HttpResponse.json(mockAppointments)));
@@ -69,9 +69,9 @@ describe('AppointmentsList', () => {
     const items = within(list).getAllByRole('listitem');
     expect(items).toHaveLength(2);
     expect(items[0]).toHaveTextContent(`${mockAppointments[0].clientName}` +
-      `${new Date(mockAppointments[0].appointmentTime).toLocaleString()} • ${mockAppointments[0].duration} minutes`);
+      `${new Date(mockAppointments[0].appointmentTime).toLocaleString()} • ${mockAppointments[0].serviceDuration} minutes`);
     expect(items[1]).toHaveTextContent(`${mockAppointments[1].clientName}` +
-      `${new Date(mockAppointments[1].appointmentTime).toLocaleString()} • ${mockAppointments[1].duration} minutes`);
+      `${new Date(mockAppointments[1].appointmentTime).toLocaleString()} • ${mockAppointments[1].serviceDuration} minutes`);
   });
 
   test('GIVEN appointment without duration WHEN render THEN do not show duration', async () => {

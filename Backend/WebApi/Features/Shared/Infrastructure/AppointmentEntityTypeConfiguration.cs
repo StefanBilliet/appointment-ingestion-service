@@ -25,7 +25,8 @@ public sealed class AppointmentEntityTypeConfiguration : IEntityTypeConfiguratio
 
         builder.Property(appointment => appointment.ServiceDuration)
             .HasConversion(
-                duration => duration.HasValue ? duration.Value.Value : default(int?),
-                value => value.HasValue ? ServiceDuration.From(value.Value) : null);
+                duration => duration.Value,
+                value => ServiceDuration.From(value)
+            );
     }
 }

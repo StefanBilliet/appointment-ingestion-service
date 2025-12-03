@@ -21,7 +21,7 @@ public class IngestAppointmentService : IIngestAppointmentService
     public async Task<AppointmentIngestionConfirmation> IngestAppointment(AppointmentToBeIngested appointmentToBeIngested,
         CancellationToken currentCancellationToken)
     {
-        var ingestedAppointment = Appointment.Ingest(appointmentToBeIngested.ClientName, appointmentToBeIngested.AppointmentTime, appointmentToBeIngested.ServiceDurationInMinutes);
+        var ingestedAppointment = Appointment.Ingest(appointmentToBeIngested.ClientName, appointmentToBeIngested.AppointmentTime, appointmentToBeIngested.ServiceDuration);
         await _unitOfWork.AddAsync(ingestedAppointment, currentCancellationToken);
         await _unitOfWork.SaveChangesAsync(currentCancellationToken);
         return new AppointmentIngestionConfirmation(ingestedAppointment.Id);
