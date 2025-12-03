@@ -2,8 +2,8 @@ import type {Meta, StoryObj} from '@storybook/react';
 import {http, HttpResponse} from 'msw';
 import {Provider} from 'react-redux';
 import {createAppStore} from '../../../state/store';
-import type {IngestedAppointmentListItem} from "../../../api/ingestedAppointmentListItem.ts";
-import type {AppointmentToBeIngested} from "../../../api/appointmentToBeIngested.ts";
+import type {IngestedAppointmentListItem} from "../data/ingestedAppointmentListItem.ts";
+import type {AppointmentToBeIngested} from "../data/appointmentToBeIngested.ts";
 import {AppointmentsOverview} from "../components/appointmentsOverview.tsx";
 
 const MOCK_APPOINTMENTS:IngestedAppointmentListItem[] = [

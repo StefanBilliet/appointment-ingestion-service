@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type {IngestedAppointmentListItem} from "../../../api/ingestedAppointmentListItem.ts";
-import type {AppointmentToBeIngested} from "../../../api/appointmentToBeIngested.ts";
-import type {AppointmentIngestionConfirmation} from "../../../api/appointmentIngestionConfirmation.ts";
+import type {IngestedAppointmentListItem} from "./ingestedAppointmentListItem.ts";
+import type {AppointmentToBeIngested} from "./appointmentToBeIngested.ts";
+import type {AppointmentIngestionConfirmation} from "./appointmentIngestionConfirmation.ts";
 
 const resolveBaseUrl = () => {
   if (globalThis.window?.location?.origin) {

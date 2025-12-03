@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import {http, HttpResponse} from 'msw';
 import {Provider} from 'react-redux';
 import {afterEach, describe, expect, test, vi} from 'vitest';
-import type {AppointmentToBeIngested} from '@/api/appointmentToBeIngested.ts';
+import type {AppointmentToBeIngested} from '@/pages/appointmentsOverview/data/appointmentToBeIngested.ts';
 import {createAppStore} from '@/state/store.ts';
 import {setupMswServer} from '@/test/setupMsw.ts';
 import {IngestAppointmentForm} from '../components/ingestAppointmentForm';
