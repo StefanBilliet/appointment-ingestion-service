@@ -38,7 +38,8 @@ export const ingestAppointmentSchema = z.object({
     .string()
     .transform((value) => value.trim())
     .refine((value) => value === '' || !Number.isNaN(Number(value)), 'Duration must be a number')
-    .transform((value) => (value === '' ? undefined : Number(value))),
+    .transform((value) => (value === '' ? undefined : Number(value)))
+    .refine((value) => value === undefined || value > 0, 'Duration must be greater than 0')
 });
 
 export type IngestAppointmentFormInput = z.input<typeof ingestAppointmentSchema>;

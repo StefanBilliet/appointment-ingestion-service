@@ -6,7 +6,7 @@ import {afterEach, describe, expect, test, vi} from 'vitest';
 import type {AppointmentToBeIngested} from '@/pages/appointmentsOverview/data/appointmentToBeIngested.ts';
 import {createAppStore} from '@/state/store.ts';
 import {setupMswServer} from '@/test/setupMsw.ts';
-import {IngestAppointmentForm} from '../components/ingestAppointmentForm';
+import {IngestAppointmentForm} from '../../components/ingestAppointmentForm.tsx';
 
 const server = setupMswServer();
 afterEach(() => {

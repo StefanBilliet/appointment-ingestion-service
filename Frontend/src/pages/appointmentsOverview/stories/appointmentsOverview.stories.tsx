@@ -45,6 +45,7 @@ const meta = {
             const payload = (await request.json()) as AppointmentToBeIngested;
             const newAppointment:IngestedAppointmentListItem = {
               id: `apt-${String(nextId).padStart(3, '0')}`,
+              serviceDuration: 30,
               ...payload,
             };
             nextId += 1;

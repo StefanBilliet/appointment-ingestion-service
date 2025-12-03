@@ -1,5 +1,5 @@
 import {afterEach, describe, expect, test, vi} from 'vitest';
-import {ingestAppointmentSchema} from './ingestAppointmentFormSchema.ts';
+import {ingestAppointmentSchema} from '../../validators/ingestAppointmentFormSchema.ts';
 
 const collectFieldErrors = (
   issues: Array<{path: (string | number | symbol)[]; message: string}>,
@@ -57,6 +57,21 @@ describe('ingestAppointmentFormSchema', () => {
     if (!result.success) {
       expect(collectFieldErrors(result.error.issues, 'appointmentTime')).toContain(
         'Appointment time must start on the hour or half-hour',
+      );
+    }
+  });
+
+  test('rejects negative duration', () => {
+    const result = ingestAppointmentSchema.safeParse({
+      clientName: 'Off Slot',
+      appointmentTime: '2025-02-01T10:10',
+      serviceDuration: '-1',
+    });
+
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(collectFieldErrors(result.error.issues, 'serviceDuration')).toContain(
+        'Duration must be greater than 0',
       );
     }
   });
